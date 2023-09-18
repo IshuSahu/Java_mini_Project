@@ -1,4 +1,3 @@
-package Level3;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.JSONObject;
 
-public class CurrencyConverter {
+class CurrencyConverter {
     public static void main(String[] args) {
         try {
             String apiKey = "89335cef1169e8d35fde69ef"; //Exchange Rate API
@@ -34,7 +33,6 @@ public class CurrencyConverter {
             e.printStackTrace();
         }
     }
-
     private static double getExchangeRate(String apiKey, String fromCurrency, String toCurrency) {
         try {
             String urlStr = "https://v6.exchangerate-api.com/v6/" + apiKey + "/pair/" + fromCurrency + "/" + toCurrency;
@@ -49,6 +47,7 @@ public class CurrencyConverter {
                 while ((line = reader.readLine()) != null) {
                     response.append(line);
                 }
+
 
                 reader.close();
 
