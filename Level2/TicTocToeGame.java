@@ -11,14 +11,13 @@ public class TicTocToeGame {
         {0, 4, 8}, {2, 4, 6}             // Diagonals
     };
 
-    // Initialize the game board
     static void initializeBoard() {
         for (int i = 0; i < 9; i++) {
             board[i] = String.valueOf(i + 1);
         }
     }
 
-    // Check if the current player has won
+    // Check winning
     static boolean checkWin() {
         for (int[] combo : WINNING_COMBINATIONS) {
             if (board[combo[0]].equals(currentPlayer) &&
@@ -40,7 +39,7 @@ public class TicTocToeGame {
         return true; 
     }
 
-    // Print Board
+    // Print game Board
     static void printBoard() {
         System.out.println("|---|---|---|");
         for (int i = 0; i < 9; i += 3) {

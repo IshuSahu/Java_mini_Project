@@ -1,65 +1,66 @@
 package Chatapp;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.*;
 import java.net.*;
 
 public class ChatServer {
-    public static void main(String[] args) {
-        try {
-            // Create a server socket on a specific port
-            ServerSocket serverSocket = new ServerSocket(5000);
-            System.out.println("Server is running and waiting for clients...");
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = null;
+        Socket clientSocket = null   ;
+        PrintWriter output = null;
+        BufferedReader userInput=null;
 
-            while (true) {
-                // Accept incoming client connections
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("New client connected: " + clientSocket.getInetAddress());
+        try{
+            serverSocket = new ServerSocket(5000);
+            System.out.println("server started, waiting for client");
 
-                // Create a thread to handle the client
-                Thread clientThread = new ClientHandler(clientSocket);
-                clientThread.start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
+            /*Accept the client*/
+            clientSocket = serverSocket.accept();
+            System.out.println("Client Connect: "+clientSocket);
 
-class ClientHandler extends Thread {
-    private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+//            Creating input output stream;
+            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            output = new PrintWriter(clientSocket.getOutputStream(), true);
 
-    public ClientHandler(Socket socket) {
-        this.clientSocket = socket;
-        try {
-            // Create input and output streams for the client socket
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+            Thread readThread = new Thread(()->{
+               String message;
+               try {
+                   while((message = input.readLine())!=null){
+                       System.out.println("User: " +message);
 
-    public void run() {
-        try {
+                   }
+
+               }catch(Exception e){
+                    e.printStackTrace();
+               }finally {
+                   try {
+                       input.close();
+                   } catch (IOException e) {
+                       throw new RuntimeException(e);
+                   }
+               }
+            });
+            readThread.start();
+
+            userInput = new BufferedReader(new InputStreamReader(System.in));
             String message;
-            while ((message = in.readLine()) != null) {
-                System.out.println("user: "+ message);
+            while((message = userInput.readLine())!=null){
+                output.println(message);
             }
-        } catch (IOException e) {
+
+        }catch (Exception e){
             e.printStackTrace();
-        } finally {
-            try {
-                // Close the socket and streams when the client disconnects
-                clientSocket.close();
-                out.close();
-                in.close();
-                System.out.println("Client disconnected: " + clientSocket.getInetAddress());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }finally {
+            try{
+            output.close();
+            userInput.close();
+            clientSocket.close();
+            serverSocket.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         }
     }
-
 }

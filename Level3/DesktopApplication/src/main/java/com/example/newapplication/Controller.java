@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Controller {
-    private static final String API_KEY = "89335cef1169e8d35fde69ef"; // Replace with your API key
+    private static final String API_KEY = "89335cef1169e8d35fde69ef"; // Replace with your Exchange API key if not work
 
     @FXML
     private ComboBox<String> fromCurrencyComboBox;

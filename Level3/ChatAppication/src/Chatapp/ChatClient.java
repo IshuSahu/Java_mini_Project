@@ -7,7 +7,7 @@ public class ChatClient {
     public static void main(String[] args) {
         try {
             // Connect to the server on a specific IP address and port
-            Socket socket = new Socket("192.168.43.30", 5000);
+            Socket socket = new Socket("YOUr API", 5000);
             System.out.println("Connected to server.");
 
             // Create output stream for sending messages to the server

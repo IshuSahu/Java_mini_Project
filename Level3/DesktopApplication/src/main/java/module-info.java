@@ -1,8 +1,8 @@
-module com.example.desktopapplication {
+module com.example.newapplication {
     requires javafx.controls;
     requires javafx.fxml;
-            
-                            
-    opens com.example.desktopapplication to javafx.fxml;
-    exports com.example.desktopapplication;
+    requires org.json;
+
+    opens com.example.newapplication to javafx.fxml;
+    exports com.example.newapplication;
 }
