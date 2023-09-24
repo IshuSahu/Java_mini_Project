@@ -7,6 +7,7 @@ import java.net.URL;
 import org.json.JSONObject;
 
 class CurrencyConverter {
+
     public static void main(String[] args) {
         try {
             String apiKey = "89335cef1169e8d35fde69ef"; //Exchange Rate API
@@ -15,7 +16,7 @@ class CurrencyConverter {
             System.out.print("Enter the base currency (e.g., USD): ");
             String fromCurrency = reader.readLine().toUpperCase();
 
-            System.out.print("Enter the target currency (e.g., EUR): ");
+            System.out.print("Enter the target currency (e.g., INR): ");
             String toCurrency = reader.readLine().toUpperCase();
 
             System.out.print("Enter the amount: ");
